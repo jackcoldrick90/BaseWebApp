@@ -17,6 +17,16 @@
 <button type="button" onclick="searchWeather()">Search</button>
 <button type="button" onclick="handleSignIn()">Login</button>
 
+<form onSubmit="handleFormSubmit()" action="#">
+  Title:<br>
+  <input id="post-title">
+  Body:<br>
+  <textarea id="post-body"></textarea>
+  <button>Submit</button>
+  </form>
+
+<div id="post-listing"></div>
+
 <div class="city"></div>
 <div class="temp"></div>
 <div class="error-message"></div>

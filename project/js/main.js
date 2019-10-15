@@ -42,3 +42,50 @@ function handleSignIn(){
     // ...
   });
 }
+
+function handleFormSubmit(){
+  var postTitle = $("#post-title").val();
+  var postBody = $("#post-body").val();
+  console.log(postTitle);
+  console.log(postBody);
+  addMessage(postTitle,postBody);
+}
+
+function addMessage(postTitle,postBody){
+  var postData = {
+    title: postTitle,
+    body: postBody
+  }
+  var database = firebase.database().ref("jacks-web-app");
+  var newPostRef = database.push();
+  newPostRef.set({
+    postData
+  }, function(error) {
+      if (error) {
+        console.log("THERE WAS AN ERROR");
+      } else {
+        window.location.reload();
+        console.log("SUCCESS");
+    }
+  });
+}
+
+function getPosts(){
+  return firebase.database().ref('jacks-web-app').once('value').then(function(snapshot) {
+    var posts = snapshot.val();
+    console.log(posts);
+
+    for(var postKey in posts){
+      var post = posts[postKey];
+      console.log(post);
+      $("#post-listing").append("<div>" + post.postData.title + " - " + post.postData.body + "</div>");
+    }
+
+
+  });
+}
+
+$(document).ready(function(){
+  getPosts();
+
+});
